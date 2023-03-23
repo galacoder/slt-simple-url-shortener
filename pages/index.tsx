@@ -10,28 +10,6 @@ export default function Home() {
 
   const [shortenedUrl, setShortenedUrl] = useState('');
 
-  const [urlList, setUrlList] = useState([]);
-
-  const fetchUrlList = async () => {
-    try {
-      const response = await fetch('/api/urls');
-
-      if (response.ok) {
-        const data = await response.json();
-        // console.log(data)
-        setUrlList(data.urls);
-      } else {
-        const error = await response.json();
-        console.error(error);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUrlList();
-  }, [shortenedUrl]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -123,7 +101,7 @@ export default function Home() {
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
             placeholder="Short description for the URL"
-            rows="4"
+            rows={4}
             required
           ></textarea>
         </div>
@@ -133,7 +111,7 @@ export default function Home() {
         >
           Generate Short URL
         </button>
-      </form>
+      </form >
       {shortenedUrl && (
         <div className="mt-12 overflow-x-auto">
           <h2 className="text-xl sm:text-2xl mb-4">Your Shortened URL:</h2>
@@ -151,31 +129,9 @@ export default function Home() {
               Copy
             </button>
           </div>
-          <h2 className="text-xl sm:text-2xl mb-4">Your Shortened URLs:</h2>
-          <table className="w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="border-b border-gray-300 px-2 sm:px-4 py-2">Title</th>
-                <th className="border-b border-gray-300 px-2 sm:px-4 py-2">Short URL</th>
-                <th className="border-b border-gray-300 px-2 sm:px-4 py-2">Clicks</th>
-              </tr>
-            </thead>
-            <tbody>
-              {urlList.map((url) => (
-                <tr key={url.id} className="hover:bg-gray-100">
-                  <td className="border-b border-gray-300 px-4 py-2">{url.title}</td>
-                  <td className="border-b border-gray-300 px-4 py-2">
-                    <a href={url.shortUrl} target="_blank" rel="noopener noreferrer">
-                      {url.shortUrl}
-                    </a>
-                  </td>
-                  <td className="border-b border-gray-300 px-4 py-2">{url.clickCount}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   )
 }
