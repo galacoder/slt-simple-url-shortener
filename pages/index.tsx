@@ -13,7 +13,9 @@ export default function Home() {
   const [password, setPassword] = useState('')
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const correctPassword = process.env.PASSWORD;
+
+  const correctPassword = process.env.NEXT_PUBLIC_PROTECTED_PASSWORD;
+
 
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
