@@ -13,7 +13,7 @@ export default function Home() {
   const [password, setPassword] = useState('')
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const correctPassword = 'Iamageek6989!';
+  const correctPassword = process.env.PASSWORD;
 
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
