@@ -2,28 +2,6 @@ import { useState, useEffect } from 'react';
 import { getUrls } from '../lib/notion';
 
 export default function Stats({ urls }) {
-  // const [urlList, setUrlList] = useState([]);
-
-  // const fetchUrlList = async () => {
-  //   try {
-  //     const response = await fetch('/api/urls');
-
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log(data);
-  //       setUrlList(data.urls);
-  //     } else {
-  //       const error = await response.json();
-  //       console.error(error);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchUrlList();
-  // }, []);
 
   return (
     <div className="container mt-12 overflow-x-auto">
@@ -43,7 +21,7 @@ export default function Stats({ urls }) {
               <td className="border-b border-gray-300 px-4 py-2">{url.clickCount}</td>
               <td className="border-b border-gray-300 px-4 py-2">
                 <a
-                  href={`${process.env.NEXT_PUBLIC_SHORT_URL_DOMAIN}/${url.shortUrl}`}
+                  href={`/${url.shortUrl}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
