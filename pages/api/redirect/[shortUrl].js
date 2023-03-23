@@ -31,7 +31,8 @@ export default async function handler(req, res) {
           },
         });
 
-        res.redirect(originalUrl);
+        // res.redirect(originalUrl);
+        res.status(200).json({ originalUrl: originalUrl });
       } else {
         res.status(404).json({ error: "URL not found" });
       }

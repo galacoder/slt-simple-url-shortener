@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import Spinner from '../components/spinner';
 
 const RedirectToOriginalUrl = () => {
   const router = useRouter();
@@ -28,9 +29,8 @@ const RedirectToOriginalUrl = () => {
   }, [shortUrl]);
 
   return (
-    <div>
-      {/* Display a loading message or a spinner while waiting for the redirection */}
-      <p>Redirecting...</p>
+    <div className="flex justify-center items-center min-h-screen">
+      <Spinner />
     </div>
   );
 };

@@ -1,28 +1,29 @@
 import { useState, useEffect } from 'react';
+import { getUrls } from '../lib/notion';
 
-export default function Stats() {
-  const [urlList, setUrlList] = useState([]);
+export default function Stats({ urls }) {
+  // const [urlList, setUrlList] = useState([]);
 
-  const fetchUrlList = async () => {
-    try {
-      const response = await fetch('/api/urls');
+  // const fetchUrlList = async () => {
+  //   try {
+  //     const response = await fetch('/api/urls');
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        setUrlList(data.urls);
-      } else {
-        const error = await response.json();
-        console.error(error);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log(data);
+  //       setUrlList(data.urls);
+  //     } else {
+  //       const error = await response.json();
+  //       console.error(error);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchUrlList();
-  }, []);
+  // useEffect(() => {
+  //   fetchUrlList();
+  // }, []);
 
   return (
     <div className="container mt-12 overflow-x-auto">
@@ -31,14 +32,15 @@ export default function Stats() {
         <thead>
           <tr>
             <th className="border-b border-gray-300 px-2 sm:px-4 py-2 text-left">Title</th>
-            <th className="border-b border-gray-300 px-2 sm:px-4 py-2 text-left">Short URL</th>
             <th className="border-b border-gray-300 px-2 sm:px-4 py-2">Clicks</th>
+            <th className="border-b border-gray-300 px-2 sm:px-4 py-2 text-left">Short URL</th>
           </tr>
         </thead>
         <tbody>
-          {urlList.map((url) => (
+          {urls.map((url) => (
             <tr key={url.id} className="hover:bg-gray-100">
               <td className="border-b border-gray-300 px-4 py-2">{url.title}</td>
+              <td className="border-b border-gray-300 px-4 py-2">{url.clickCount}</td>
               <td className="border-b border-gray-300 px-4 py-2">
                 <a
                   href={`${process.env.NEXT_PUBLIC_SHORT_URL_DOMAIN}/${url.shortUrl}`}
@@ -48,7 +50,7 @@ export default function Stats() {
                   {`${process.env.NEXT_PUBLIC_SHORT_URL_DOMAIN}/${url.shortUrl}`}
                 </a>
               </td>
-              <td className="border-b border-gray-300 px-4 py-2">{url.clickCount}</td>
+
             </tr>
           ))}
         </tbody>
@@ -57,3 +59,13 @@ export default function Stats() {
   );
 }
 
+// Add the getStaticProps function
+export async function getStaticProps() {
+  const urls = await getUrls();
+  return {
+    props: {
+      urls,
+    },
+    revalidate: 60, // Revalidate every 60 seconds
+  };
+}
